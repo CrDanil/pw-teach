@@ -121,7 +121,7 @@ export function countSheeps(arrayOfSheep: (boolean | undefined | null)[]) { // �
   // }
   // return count
   return arrayOfSheep.filter(Boolean).length; // для true
-  return arrayOfSheep.filter(el => !el).length; // для false
+  // return arrayOfSheep.filter(el => !el).length; // для false
 }
 console.log(countSheeps([false,false,true,true,true]))
 
@@ -131,3 +131,9 @@ export const makeNegative = (num: number): number => { // число отриц�
 }
 console.log(makeNegative(2))
 console.log(makeNegative(-4))
+
+
+export function DNAtoRNA(dna: string): string { //  DNAtoRNA
+  return dna.replace(/T/g, 'U');
+}
+console.log(DNAtoRNA("GCAT"));
