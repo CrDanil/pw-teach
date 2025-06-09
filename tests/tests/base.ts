@@ -79,7 +79,7 @@ export function abbrevName(name: string): string { // аббревиатуры
 }
 console.log(abbrevName("Danil Zaborovschi"))
 
-export const booleanToString = (b:boolean):string => String(b)
+export const booleanToString = (b:boolean):string => String(b) // булево в стринг
   //export const booleanToString = (b:boolean):string => {
   //return String(b); вариант 1
   //if (b == true) return "true"; вариант 2
@@ -87,7 +87,7 @@ export const booleanToString = (b:boolean):string => String(b)
 console.log(booleanToString(false))
 
 
-export const summation = (num:number)=> {
+export const summation = (num:number)=> { // сумма цифр по количеству
   let result = 0;
   for (let i = 1; i <=num; i++) {
     result += i;
@@ -96,3 +96,38 @@ export const summation = (num:number)=> {
 }
 console.log(summation(3))
 
+export function cockroachSpeed(s: number): number{ // таракан
+  return Math.floor(s * (100000 / 3600));
+}
+console.log(cockroachSpeed(1.09))
+
+export function doubleChar(str: string): string{ // массив с двумя буквами
+  const mas: string [] = [];
+  for (let i = 0; i < str.length; i++) {
+    let a = str.charAt(i)
+    mas.push(a);
+    mas.push(a);
+  }
+  return mas.join('').toString()
+}
+console.log(doubleChar("AbcD"));
+
+export function countSheeps(arrayOfSheep: (boolean | undefined | null)[]) { // подсчёт в массиве
+  // let count: number = 0;
+  // for (let i = 0; i < arrayOfSheep.length; i++) {
+  //   if (arrayOfSheep[i] == true){
+  //     count++;
+  //   }
+  // }
+  // return count
+  return arrayOfSheep.filter(Boolean).length; // для true
+  return arrayOfSheep.filter(el => !el).length; // для false
+}
+console.log(countSheeps([false,false,true,true,true]))
+
+
+export const makeNegative = (num: number): number => { // число отрицательное
+  return -Math.abs(num);
+}
+console.log(makeNegative(2))
+console.log(makeNegative(-4))
