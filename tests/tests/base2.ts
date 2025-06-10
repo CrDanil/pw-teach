@@ -59,3 +59,26 @@ export function decode(str: string): string {
 }
 console.log(encode("Hello"))
 console.log(decode("h2ll4"))
+
+
+export function orderWeight(strng: string): string { // "вес" цифр
+    const nums = strng.trim().split(" ").filter(s => s !== "");
+
+    const sorted = nums.sort((a, b) => {
+        const sumA = a.split('').map(Number).reduce((acc, digit) => acc + digit, 0);
+        const sumB = b.split('').map(Number).reduce((acc, digit) => acc + digit, 0);
+
+        if (sumA !== sumB) {
+            return sumA - sumB;
+        } else {
+            return a.localeCompare(b);
+        }
+    });
+
+    return sorted.join(" ");
+}
+
+console.log(orderWeight("2000 10003 1234000 44444444 9999 11 11 22 123"));
+
+//56 65 74 100 99 68 86 180 90
+//100 180 90 56 65 74 68 86 99
