@@ -80,5 +80,31 @@ export function orderWeight(strng: string): string { // "вес" цифр
 
 console.log(orderWeight("2000 10003 1234000 44444444 9999 11 11 22 123"));
 
-//56 65 74 100 99 68 86 180 90
-//100 180 90 56 65 74 68 86 99
+
+// export function findUniq(arr: number[]): number { // уникальный в массиве
+//     for (let i = 0; i < arr.length; i++) {
+//         let isNum = true;
+//         for (let j = 0; j < arr.length; j++) { // Сравниваем текущий элемент со всеми остальными
+//             if (i !== j && arr[i] === arr[j]) {
+//                 isNum = false;
+//                 break;
+//             }
+//         }
+//         if (isNum) { // Если нашли уникальный - возвращаем его
+//             return arr[i];
+//         }
+//     }
+// }
+    // Внешний цикл проходит по всем элементам массива
+    // Внутренний цикл сравнивает текущий элемент со всеми остальными
+    // Если элемент не равен ни одному другому - он уникальный
+    // Возвращаем первый найденный уникальный элемент
+
+export function findUniq(arr: number[]): number { // уникальный в массиве
+    // Проверяем первые три элемента, чтобы определить стандартное значение
+    const standard = [arr[0], arr[1], arr[2]].find(
+    num => [arr[0], arr[1], arr[2]].filter(n => n === num).length > 1) || arr[0];
+    //Находим элемент, который отличается от стандартного
+    return arr.find(num => num !== standard)!;
+}
+console.log(findUniq([1,1,1,1,2,1,1,1,1]))

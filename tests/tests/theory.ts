@@ -49,10 +49,3 @@ const nums = [1, 2, 3];
 console.log(nums);
 clearArray(nums); // Теперь nums = []
 console.log(nums);
-
-function getUserAge(): void {
-    return 25; // ❌ плохо (но компилируется):
-}
-function getUserAge2(): number {
-    return 25; // ✅
-}
