@@ -1,0 +1,115 @@
+Команда	                Пример	                             Описание
+🔹 1. Навигация
+page.goto()	       await page.goto('https://example.com')	 Переход по URL
+page.goBack()	   await page.goBack()	                     Назад в истории
+page.goForward()   await page.goForward()	                 Вперёд в истории
+page.reload()	   await page.reload()	                     Перезагрузка страницы
+
+🔹 2. Поиск элементов (локаторы)
+page.locator()	   await page.locator('button').click()	               Поиск по CSS/XPath
+page.getByText()   await page.getByText('Login').click()	           Поиск по тексту
+page.getByRole()   await page.getByRole('button', { name: 'Submit' })  По ARIA-роли
+
+🔹 3. Действия с элементами
+page.click()	       await page.click('#submit')	                                Клик по элементу
+page.fill()	           await page.fill('#email', 'test@test.com')	                Заполнение поля
+page.type()	           await page.type('#search', 'Playwright', { delay: 100 })	    Ввод с задержкой
+page.check()	       await page.check('#agree')	                                Чекбокс/радио
+page.selectOption()	   await page.selectOption('select#country', 'US')	            Выбор из списка
+
+🔹 4. Проверки (assertions)
+expect().toBeVisible()	 await expect(page.locator('.popup')).toBeVisible()	                Видим ли элемент
+expect().toHaveText()	 await expect(page.locator('h1')).toHaveText('Welcome')	            Проверка текста
+expect().toHaveValue()	 await expect(page.locator('#email')).toHaveValue('test@test.com')	Значение поля
+expect().toHaveURL()	 await expect(page).toHaveURL(/dashboard/)	                        Проверка URL
+
+🔹 5. Ожидания
+page.waitForSelector()	 await page.waitForSelector('.loader', { state: 'hidden' })	Ждём элемент
+page.waitForURL()	     await page.waitForURL('**/dashboard')	                    Ждём URL
+page.waitForEvent()	     await page.waitForEvent('popup')	                        Ждём событие
+
+🔹 6. Фреймы и окна
+frame.locator()	            await frame.locator('button').click()	                                                Поиск во фрейме
+page.frameLocator()	        await page.frameLocator('iframe').locator('button').click()	                            Локатор фрейма
+page.waitForEvent('popup')	const [popup] = await Promise.all([page.waitForEvent('popup'), page.click('#link')])    Работа с попапом
+
+🔹 7. Загрузки и файлы
+page.waitForEvent('download')	const download = await page.waitForEvent('download'); await download.saveAs('file.pdf')	Скачивание файла
+page.setInputFiles()	        await page.setInputFiles('#upload', 'test.png')	                                        Загрузка файла
+
+🔹 8. Скриншоты и видео
+page.screenshot()	    await page.screenshot({ path: 'screenshot.png' })	            Скриншот страницы
+locator.screenshot()	await page.locator('header').screenshot({ path: 'header.png' })	Скриншот элемента
+
+🔹 9. Запуск тестов (терминал)
+Команда	                                Описание
+npx playwright test	                    Запуск всех тестов
+npx playwright test tests/login.spec.js	Запуск конкретного файла
+npx playwright test -g "название"       Запуск тестов с фильтром по имени
+npx playwright test --project=chromium  Запуск в конкретном браузере
+npx playwright test --headed	        Запуск с браузером
+npx playwright test --grep "login"	    Запуск тестов с "login" в названии
+npx playwright show-report	            Просмотр отчёта
+npx playwright test --debug             Запуск в режиме debug (пошагово)
+npx playwright test --ui                Запуск в режиме UI (графическая оболочка)
+npx playwright test --last-failed       Повторный запуск только упавших тестов
+npx playwright test --reset-cache       Очистка кэша перед тестами
+
+___________________________________________________________________
+Основные роли для getByRole()
+1. Общие роли
+Роль        Для чего 	    Пример элемента
+'link'	    Ссылки	        <a href="">, <div role="link">
+'button'	Кнопки	        <button>, <div role="button">
+'heading'	Заголовки	    <h1>-<h6>, <div role="heading">
+'textbox'	Поля ввода	    <input type="text">, <textarea>
+'checkbox'	Чекбоксы	    <input type="checkbox">
+'radio'	    Радио-кнопки	<input type="radio">
+'img'	    Изображения	    <img>, <div role="img">
+
+2. Формы и ввод данных
+'combobox'	    Выпадающий список (<select>)
+'spinbutton'	Поле с кнопками вверх/вниз (<input type="number">)
+'slider'	    Слайдер (<input type="range">)
+'searchbox'	    Поле поиска
+
+3. Структурные роли
+'list'	    Список (<ul>, <ol>)
+'listitem'	Элемент списка (<li>)
+'table'	    Таблица (<table>)
+'cell'	    Ячейка таблицы (<td>)
+'row'	    Строка таблицы (<tr>)
+
+4. Навигация и регионы
+'banner'	    Шапка сайта (<header>)
+'navigation'	Навигационное меню (<nav>)
+'main'	        Основное содержимое (<main>)
+'contentinfo'	Подвал (<footer>)
+
+Как узнать роль элемента?
+Chrome DevTools:
+Откройте Elements → вкладка Accessibility
+Найдите свойство role элемента.
+Playwright:
+const role = await page.locator('#element').evaluate(el => el.getAttribute('role'));
+console.log(role);
+
+-------------------------------------------------------------------------------------------
+
+git status                  Показывает, какие файлы изменены, добавлены или ещё не отслеживаются.
+git add .                   Добавляет все изменения к следующему коммиту.
+git add имя_файла           Можно добавить отдельный файл:
+git commit -m               "Краткое описание изменений" Фиксация изменений (commit)
+git remote add origin https://github.com/CrDanil/cypress-teach Привязка к удалённому репозиторию (только один раз)
+git push -u origin main     Отправляет локальные коммиты в ветку main на GitHub. -u — запоминает связь между локальной и удалённой веткой.
+git push                    Для следующих пушей можно писать просто
+git pull                    Загружает и сливает (merge) изменения с удалённой ветки.
+git log --oneline           Показывает краткую историю коммитов.
+
+//на первом ПК (отправка)
+git add .
+git commit -m "Комментарий к изменениям"
+git push
+
+//на втором ПК (приём)
+git pull
