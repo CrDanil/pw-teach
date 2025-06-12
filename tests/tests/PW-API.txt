@@ -1,0 +1,77 @@
+Основные HTTP-методы:
+Метод	Назначение	                                Пример действия
+GET	    Получить данные	                            Получить список пользователей
+POST	Отправить новые данные (создание ресурса)	Добавить нового пользователя
+PUT	    Полностью обновить ресурс	                Обновить данные пользователя целиком
+PATCH	Частично обновить ресурс	                Изменить только имя пользователя
+DELETE	Удалить ресурс	                            Удалить пользователя
+HEAD	Как GET, но возвращает только заголовки	    Проверить наличие ресурса без тела ответа
+OPTIONS	Узнать, какие методы поддерживаются	        Получить доступные действия с ресурсом
+------------------------------------------------------------------------------------------
+
+Типичный REST API путь:
+GET      /users       → получить всех пользователей
+GET      /users/123   → получить пользователя с id 123
+POST     /users       → создать нового пользователя
+PUT      /users/123   → полностью обновить пользователя
+PATCH    /users/123   → частично обновить пользователя
+DELETE   /users/123   → удалить пользователя
+------------------------------------------------------------------------------------------
+
+body (тело запроса): передаётся в POST, PUT, PATCH
+
+const response = await request.post('/users', {
+  data: { name: 'Danil' }
+});
+expect(response.status()).toBe(201);
+------------------------------------------------------------------------------------------
+
+Сравнение с Postman
+Действие	        Postman	                Playwright
+Отправка запроса	Выбираем метод в UI	    await request.get()/post()
+Заголовки	        Вкладка Headers	        headers: { 'Authorization': 'Bearer token' }
+Тело запроса	    Вкладка Body	        data: { ... } или form: { ... }
+Параметры	        Params	params:         { key: 'value' }
+Проверки	        Tests → JavaScript	    expect(response...)
+------------------------------------------------------------------------------------------
+
+Опции (options):
+{
+  headers: { 'Content-Type': 'application/json' },
+  data: { key: 'value' },    // Для JSON
+  form: { login: 'test' },   // Для form-data
+  params: { page: 1 },       // Query-параметры ?page=1
+  timeout: 10000             // Таймаут в мс
+}
+------------------------------------------------------------------------------------------
+Работа с ответами
+1. Получение данных:
+const response = await request.get(...);
+// Статус
+response.status();  // → 200
+// Заголовки
+response.headers(); // → { 'content-type': 'application/json' }
+// Тело ответа
+await response.text();  // → "raw text"
+await response.json();  // → parsed JSON
+
+2. Проверки (аналогично Postman Tests):
+expect(response.status()).toBe(200);
+expect(await response.json()).toMatchObject({
+  id: expect.any(Number),
+  name: 'Test User'
+});
+
+Авторизация (как в Postman "Authorization")
+1. Basic Auth:
+await request.get('https://api.example.com', {
+  headers: {
+    'Authorization': 'Basic ' + Buffer.from('login:password').toString('base64')
+  }
+});
+2. Bearer Token (JWT):
+await request.get('https://api.example.com/protected', {
+  headers: {
+    'Authorization': 'Bearer eyJhbGciOi...'
+  }
+});
