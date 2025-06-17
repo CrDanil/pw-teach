@@ -1,4 +1,4 @@
-class Base {
+class Base1 {
   public getMas(n: string): number[] {
     // static?
     const result = n.split("").reverse().map(Number);
@@ -6,7 +6,7 @@ class Base {
     return result;
   }
 }
-const base = new Base();
+const base = new Base1();
 base.getMas("12345");
 
 function getMas(n: string): number[] {
